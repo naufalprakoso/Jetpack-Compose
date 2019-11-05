@@ -1,4 +1,4 @@
-package com.naufalprakoso.jetpackcompose.compose.login
+package com.naufalprakoso.jetpackcompose.ui.compose.login
 
 import androidx.compose.Composable
 import androidx.compose.unaryPlus
@@ -17,7 +17,7 @@ import com.naufalprakoso.jetpackcompose.R
 import com.naufalprakoso.jetpackcompose.model.News
 
 @Composable
-fun StoryCard(news: News) {
+fun NewsCard(news: News) {
     val image = +imageResource(R.drawable.morning)
 
     Card(shape = RoundedCornerShape(8.dp), elevation = 8.dp) {

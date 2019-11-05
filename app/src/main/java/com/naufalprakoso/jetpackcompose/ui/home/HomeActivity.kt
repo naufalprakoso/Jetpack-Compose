@@ -1,16 +1,21 @@
 package com.naufalprakoso.jetpackcompose.ui.home
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.ui.core.*
+import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.VerticalScroller
 import androidx.ui.layout.*
 import androidx.ui.material.MaterialTheme
 import androidx.ui.tooling.preview.Preview
-import com.naufalprakoso.jetpackcompose.compose.login.StoryCard
-import com.naufalprakoso.jetpackcompose.compose.login.Title
+import com.naufalprakoso.jetpackcompose.data.Const
+import com.naufalprakoso.jetpackcompose.ui.compose.login.Title
 import com.naufalprakoso.jetpackcompose.model.News
+import com.naufalprakoso.jetpackcompose.ui.compose.login.NewsCard
+import com.naufalprakoso.jetpackcompose.ui.detail.DetailActivity
 
 class HomeActivity : AppCompatActivity() {
 
@@ -27,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
                     Column {
                         Title()
                         HeightSpacer(height = 16.dp)
-                        NewsStory(news)
+                        NewsStory(news, applicationContext)
                     }
                 }
             }
@@ -60,11 +65,18 @@ class HomeActivity : AppCompatActivity() {
 }
 
 @Composable
-fun NewsStory(news: ArrayList<News>) {
+fun NewsStory(news: ArrayList<News>, context: Context) {
     VerticalScroller {
         Column(modifier = Spacing(16.dp)) {
             for (data: News in news)
-                StoryCard(data)
+                Clickable(onClick = {
+                    val intent = Intent(context, DetailActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    intent.putExtra(Const.NEWS_KEY, data)
+                    context.startActivity(intent)
+                }) {
+                    NewsCard(data)
+                }
         }
     }
 }
@@ -76,7 +88,6 @@ fun DefaultPreview() {
         Column {
             Title()
             HeightSpacer(height = 16.dp)
-//            NewsStory(news)
         }
     }
 }
